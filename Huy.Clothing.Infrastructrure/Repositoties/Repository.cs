@@ -30,20 +30,11 @@ public class Repository<T> : IRepository<T> where T : class
         throw new NotImplementedException();
     }
 
-    public T Find(params object[] keyValues)
-    {
-        throw new NotImplementedException();
-    }
+    public T Find(params object[] keyValues) => Entities.Find(keyValues);
 
-    public Task<T> FindAsync(params object[] keyValues)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<T> FindAsync(params object[] keyValues) => await Entities.FindAsync(keyValues);
 
-    public Task<IList<T>> GetAllAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<IList<T>> GetAllAsync() => await Entities.ToListAsync();
 
     public Task InsertAsync(T entity, bool saveChanges = true)
     {
