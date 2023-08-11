@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 namespace Huy.Clothing.Infrastructrure.Repositoties;
 public class Repository<T> : IRepository<T> where T : class
 {
-    public IApplicationDbContext ApplicationDbContext => throw new NotImplementedException();
-    public DbSet<T> Entities => throw new NotImplementedException();
+    public IApplicationDbContext ApplicationDbContext { get; private set; }
+
+    public Repository(IApplicationDbContext applicationDbContext) => ApplicationDbContext = applicationDbContext;
+
+    public DbSet<T> Entities => ApplicationDbContext.DbContext.Set<T>();
 
     public Task DeleteAsync(T entity, bool saveChanges = true)
     {
