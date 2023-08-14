@@ -1,10 +1,5 @@
 ﻿using Huy.Clothing.Application.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Huy.Clothing.Infrastructrure.Repositoties;
 public class Repository<T> : IRepository<T> where T : class
