@@ -15,19 +15,39 @@ public class Repository<T> : IRepository<T> where T : class
 
     public DbSet<T> Entities => ApplicationDbContext.DbContext.Set<T>();
 
-    public Task DeleteAsync(T entity, bool saveChanges = true)
+    public async Task DeleteAsync(T entity, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Entities.Remove(entity);
+            if (saveChanges)
+            {
+                await ApplicationDbContext.DbContext.SaveChangesAsync();
+            }
+        }
+        catch(Exception ex)
+        {
+            throw ex;
+        }
     }
 
-    public Task DeleteAsync(int id, bool saveChanges = true)
+    public async Task DeleteAsync(int id, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        var entity = await Entities.FindAsync(id);
+        await DeleteAsync(entity);
+        if(saveChanges)
+        {
+            await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
     }
 
-    public Task DeleteRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
+    public async Task DeleteRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        Entities.RemoveRange(entities);
+        if (saveChanges)
+        {
+            await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
     }
 
     public T Find(params object[] keyValues) => Entities.Find(keyValues);
@@ -36,23 +56,37 @@ public class Repository<T> : IRepository<T> where T : class
 
     public async Task<IList<T>> GetAllAsync() => await Entities.ToListAsync();
 
-    public Task InsertAsync(T entity, bool saveChanges = true)
+    public async Task InsertAsync(T entity, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        await Entities.AddAsync(entity);
+        if (saveChanges)
+        {
+           await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
+    }
+        
+
+    public async Task InsertRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
+    {
+        await ApplicationDbContext.DbContext.AddRangeAsync(entities);
+        if (saveChanges)
+        {
+           await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
     }
 
-    public Task InsertRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
+    public async Task UpdateAsync(T entity, bool saveChanges = true)
     {
-        throw new NotImplementedException();
+        Entities.Update(entity);
+        if (saveChanges)
+        {
+            await ApplicationDbContext.DbContext.SaveChangesAsync();
+        }
     }
 
-    public Task UpdateAsync(T entity, bool saveChanges = true)
+    public async Task UpdateRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
     {
-        throw new NotImplementedException();
-    }
+        Entities.UpdateRange(entities);
 
-    public Task UpdateRangeAsync(IEnumerable<T> entities, bool saveChanges = true)
-    {
-        throw new NotImplementedException();
     }
 }
