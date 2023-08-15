@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace Huy.Clothing.Infrastructrure.Repositoties;
-public class Repository<T> : IRepository<T> where T : class
+public sealed class Repository<T> : IRepository<T> where T : class
 {
     public IApplicationDbContext ApplicationDbContext { get; private set; }
 
