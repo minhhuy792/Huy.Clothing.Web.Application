@@ -1,12 +1,4 @@
-﻿using Huy.Clothing.Application.Interfaces.Repositories;
-using Huy.Clothing.Application.Interfaces.Services;
-using Huy.Clothing.Infrastructrure.Extensions;
-using Huy.Clothing.Service.BaseServices;
-using Huy.Clothing.Shared;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-
-namespace Huy.Clothing.Service.Services;
+﻿namespace Huy.Clothing.Service.Services;
 
 public class ProductService : DataServiceBase<Product>, IProductService
 {
@@ -14,12 +6,39 @@ public class ProductService : DataServiceBase<Product>, IProductService
     {
     }
 
-    public override Task AddAsync(Product entity)
-    => UnitOfWork.Repository<Product>().InsertAsync(entity);
+    public override async Task AddAsync(Product entity)
+    {
+        try
+        {
+            await UnitOfWork.BeginTransactionAsync();
+            await UnitOfWork.Repository<Product>().InsertAsync(entity);
+            await UnitOfWork.CommitTransactionAsync();
+        }
+        catch(Exception ex)
+        { 
+            await UnitOfWork.RollbackTransactionAsync();
+            throw;
+        }
+    }
 
     public override async Task DeleteAsync(int? id)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await UnitOfWork.BeginTransactionAsync();
+            //1.get repository of Product
+            var productRepo = UnitOfWork.Repository<Category>();
+            //2.get product instance by id
+            var product = await productRepo.FindAsync(id);
+            if (product == null)
+                throw new KeyNotFoundException();
+            await productRepo.DeleteAsync(product);
+            await UnitOfWork.CommitTransactionAsync();
+        }
+        catch (Exception ex)
+        {
+            await UnitOfWork.RollbackTransactionAsync();
+        }
     }
 
     public override async Task DeleteAsync(Product entity)
