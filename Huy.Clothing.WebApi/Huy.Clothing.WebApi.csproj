@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Huy.Clothing.Caching\Huy.Clothing.Caching.csproj" />
+    <ProjectReference Include="..\Huy.Clothing.Service\Huy.Clothing.Service.csproj" />
+    <ProjectReference Include="..\Huy.Clothing.Shared.EntityModels.SqlServer\Huy.Clothing.Shared.EntityModels.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

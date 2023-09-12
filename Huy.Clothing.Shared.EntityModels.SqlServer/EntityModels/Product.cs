@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace Huy.Clothing.Shared;
@@ -20,7 +22,7 @@ public partial class Product
     public string ProductName { get; set; } = null!;
 
     public int? SupplierId { get; set; }
-
+    
     public int? CategoryId { get; set; }
 
     [StringLength(20)]
@@ -39,12 +41,18 @@ public partial class Product
 
     [ForeignKey("CategoryId")]
     [InverseProperty("Products")]
+    [XmlIgnore]
+    [JsonIgnore]
     public virtual Category? Category { get; set; }
 
     [InverseProperty("Product")]
+    [XmlIgnore]
+    [JsonIgnore]
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     [ForeignKey("SupplierId")]
     [InverseProperty("Products")]
+    [XmlIgnore]
+    [JsonIgnore]
     public virtual Supplier? Supplier { get; set; }
 }

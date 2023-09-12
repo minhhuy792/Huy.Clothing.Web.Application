@@ -1,6 +1,6 @@
 ﻿namespace Huy.Clothing.Service.Services;
 
-public class CategoryService : DataServiceBase<Category>, IProductCategoryService
+public class CategoryService : DataServiceBase<Category>, ICategoryService
 {
     public CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {

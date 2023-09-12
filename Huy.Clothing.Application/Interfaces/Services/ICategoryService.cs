@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace Huy.Clothing.Application.Interfaces.Services;
 
-public interface IProductCategoryService:IDataService<Category>
+public interface ICategoryService:IDataService<Category>
 {
 }

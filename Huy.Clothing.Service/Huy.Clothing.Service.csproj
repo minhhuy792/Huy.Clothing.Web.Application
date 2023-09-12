@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Huy.Clothing.Application\Huy.Clothing.Application.csproj" />
+    <ProjectReference Include="..\Huy.Clothing.Caching\Huy.Clothing.Caching.csproj" />
     <ProjectReference Include="..\Huy.Clothing.Infrastructrure\Huy.Clothing.Infrastructrure.csproj" />
     <ProjectReference Include="..\Huy.Clothing.Shared.EntityModels.SqlServer\Huy.Clothing.Shared.EntityModels.SqlServer.csproj" />
   </ItemGroup>
